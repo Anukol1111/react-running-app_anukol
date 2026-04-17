@@ -1,16 +1,8 @@
-import React from 'react'
-
 export default function FooterSAU() {
   return (
-    <>
-        <div className='flex flex-col items-center w-full mt-10 mb-20'>
-            <p>
-                © 2026 SAU. All rights reserved.
-            </p>
-            <p>
-                Designed by NinniN SAU. มหาวิทยาลัยเอเชียอาคเนย์
-            </p>
-        </div>
-    </>
+    <div className='mt-6 flex flex-col items-center gap-1 pb-4 text-center text-xs text-slate-500'>
+      <p>Created by SAU</p>
+      <p>Copyright © 2025 All rights reserved.</p>
+    </div>
   )
 }

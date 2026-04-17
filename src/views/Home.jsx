@@ -1,6 +1,4 @@
-import React from 'react' 
 import FooterSAU from './../components/FooterSAU'
-import logo from './../assets/logo.png'
 import { useState } from 'react'
 import Swal from 'sweetalert2'
 import { useNavigate } from 'react-router-dom'
@@ -12,7 +10,7 @@ export default function Home() {
   // [ชื่อ state, ฟังก์ชันสำหรับอัปเดตค่า state] = useState(ค่าเริ่มต้น)
   const [secureCode, setSecureCode] = useState('')
 
-  // ฟังก์ชันตรวจสอบ Secure Code เพื่อเปิดไปยังหน้า /showallfood
+  // ฟังก์ชันตรวจสอบ Secure Code เพื่อเปิดไปยังหน้า /showallrun
   const handleAccessClick = () => {
     // Validate UI
     if (secureCode === '') {
@@ -27,10 +25,10 @@ export default function Home() {
       return
     }
 
-    // ตรวจสอบว่า secureCode ตรงกับ 'SAU' หรือไม่ ถ้าใช่ให้เปิดหน้า /showallfood    
+    // ตรวจสอบว่า secureCode ตรงกับ 'SAU' หรือไม่ ถ้าใช่ให้เปิดหน้า /showallrun
     if (secureCode.toUpperCase() === 'SAU') {
-      // เปิดหน้า /showallfood
-      navigate('/showallfood')
+      // เปิดหน้า /showallrun
+      navigate('/showallrun')
     } else {
       // แสดงข้อความเตือนว่า Secure Code ไม่ถูกต้อง
       Swal.fire({
@@ -43,35 +41,41 @@ export default function Home() {
   }
 
   return (
-    <>
-      {/* ส่วนของรายละเอียดของหน้าหลัก */}
-      <div className='w-3/5 mx-auto flex flex-col items-center shadow-lg
-                      border border-gray-300 rounded p-10 mt-30'>
+    <div className='min-h-screen flex flex-col px-4 py-10'>
+      <div className='flex-1 flex items-center justify-center'>
+        <div className='w-full max-w-4xl rounded-sm border border-slate-200 bg-white px-6 py-10 shadow-[0_12px_40px_rgba(15,23,42,0.08)] md:px-12'>
+          <div className='mx-auto flex max-w-3xl flex-col items-center'>
+            <h1 className='text-center text-xl font-bold text-blue-700 md:text-2xl'>
+              Running APP
+            </h1>
+            <p className='mt-1 text-center text-lg font-bold text-blue-700'>วิ่งกันเถอะ</p>
 
-        {/* แสดงรูป logo */}
-        <img src={logo} alt="logo" className='w-30' />
+            <img src='/training.png' alt='Running App logo' className='mt-5 w-24 md:w-28' />
 
-        {/* แสดงชื่อเว็บ */}
-        <h1 className='text-2xl mt-5 font-bold text-blue-500'>
-          Food Log App (การกินของฉัน)
-        </h1>
+            <input
+              value={secureCode}
+              onChange={(e) => setSecureCode(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  handleAccessClick()
+                }
+              }}
+              type='text'
+              placeholder='Enter secure code'
+              className='mt-6 w-full rounded-sm border border-slate-300 px-4 py-2 text-sm outline-none transition focus:border-blue-500'
+            />
 
-        {/* ป้อน Secure Code */}
-        <input value={secureCode}
-          onChange={(e) => setSecureCode(e.target.value)}
-          type="text" placeholder='Secure Code: ?????'
-          className='w-[250px] border mt-5 p-2 rounded-md' />
-
-        {/* ปุ่มกดเข้าใช้งา เว็บ */}
-        <button onClick={handleAccessClick}
-          className='w-[250px] bg-green-500 mt-5 text-white p-2 
-                           rounded-md cursor-pointer hover:bg-green-700'>
-          เข้าใช้งาน
-        </button>
+            <button
+              onClick={handleAccessClick}
+              className='mt-4 w-full rounded-sm bg-blue-700 px-4 py-2 text-sm font-medium text-white transition hover:bg-blue-800'
+            >
+              เข้าใช้งาน
+            </button>
+          </div>
+        </div>
       </div>
 
-      {/* ส่วนของ Footer */}
       <FooterSAU />
-    </>
+    </div>
   )
 }

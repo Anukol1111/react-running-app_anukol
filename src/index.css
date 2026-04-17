@@ -1,5 +1,14 @@
 @import "tailwindcss";
 
-body{
-    font-family: Kanit;
+html,
+body,
+#root {
+    min-height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Kanit, sans-serif;
+    background: #f5f7fb;
+    color: #334155;
 }
