@@ -1,4 +1,4 @@
-import supabase from './supabaseClient'
+import { getSupabaseClientOrThrow } from './supabaseClient'
 
 const RUNNING_TABLE = 'running_tb'
 const RUNNING_BUCKET = 'running_bk'
@@ -52,6 +52,7 @@ const buildRunImagePath = (runImageFile) => {
 }
 
 export const getAllRuns = async () => {
+  const supabase = getSupabaseClientOrThrow()
   const { data, error } = await supabase
     .from(RUNNING_TABLE)
     .select('*')
@@ -65,6 +66,7 @@ export const getAllRuns = async () => {
 }
 
 export const getRunById = async (id) => {
+  const supabase = getSupabaseClientOrThrow()
   const { data, error } = await supabase
     .from(RUNNING_TABLE)
     .select('*')
@@ -79,6 +81,7 @@ export const getRunById = async (id) => {
 }
 
 export const uploadRunImage = async (runImageFile) => {
+  const supabase = getSupabaseClientOrThrow()
   const objectPath = buildRunImagePath(runImageFile)
   const { error: uploadError } = await supabase.storage
     .from(RUNNING_BUCKET)
@@ -93,6 +96,7 @@ export const uploadRunImage = async (runImageFile) => {
 }
 
 export const removeRunImage = async (runImageUrl) => {
+  const supabase = getSupabaseClientOrThrow()
   const objectPath = getStorageObjectPathFromPublicUrl(runImageUrl)
 
   if (!objectPath) {
@@ -107,6 +111,7 @@ export const removeRunImage = async (runImageUrl) => {
 }
 
 export const createRun = async ({ runDate, runLocation, runDistance, runTime, runImageFile }) => {
+  const supabase = getSupabaseClientOrThrow()
   const runImageUrl = await uploadRunImage(runImageFile)
 
   const { error } = await supabase
@@ -134,6 +139,7 @@ export const updateRun = async ({
   runImageFile,
   currentRunImageUrl,
 }) => {
+  const supabase = getSupabaseClientOrThrow()
   let nextRunImageUrl = currentRunImageUrl
 
   if (runImageFile) {
@@ -170,6 +176,7 @@ export const updateRun = async ({
 }
 
 export const deleteRun = async (id, runImageUrl) => {
+  const supabase = getSupabaseClientOrThrow()
   const { error } = await supabase.from(RUNNING_TABLE).delete().eq('id', id)
 
   if (error) {
